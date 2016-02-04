@@ -1,5 +1,5 @@
 from re import findall
-
+import unittest
 
 class Tweet:
     """A simple Tweet parser class"""
@@ -8,10 +8,13 @@ class Tweet:
         self.text = tweet
 
     def get_mentions(self):
-        findall(r"@\w+", self.text)
+        return findall(r"@\w+", self.text)
 
     def get_topics(self):
-        findall(r"Hello", self.text)
+        return findall(r"#[^\W_]+", self.text)
+
+    def get_links(self):
+        return findall(r"(https:\/\/t.co\/)[a-zA-Z|0-9]{20}", self.text)
 
 
 tweet = Tweet('Hello #world @twitter')
