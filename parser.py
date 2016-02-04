@@ -8,15 +8,8 @@ class Tweet:
         self.text = tweet
 
     def get_mentions(self):
-        mention = findall("@[\w@]{1,21}", self.text)
+        mention = findall("@[\w@]{1,20}", self.text)
         mention = [x for x in mention if x.count('@') == 1]
-        filtered_mentions = []
-
-        for m in mention:
-            if m[0] == '@':
-                filtered_mentions.append(m)
-
-        mention = filtered_mentions
         filtered_mentions = []
 
         for m in mention:
@@ -28,7 +21,7 @@ class Tweet:
         return filtered_mentions
 
     def get_topics(self):
-        return findall(r"#[^\W_]+", self.text)
+        return findall(r"#[a-zA-Z][^\W_]+", self.text)
 
     def get_links(self):
         return findall(r"(https:\/\/t.co\/)[a-zA-Z|0-9]{20}", self.text)
@@ -81,22 +74,35 @@ class TestTweetMethods(unittest.TestCase):
 
     def test_get_topics_multiple(self):
         tweet = Tweet('#one #two #three')
-        self.assertEqual(tweet.get_topics(),['#one','#two','three'])
+        self.assertEqual(tweet.get_topics(),['#one','#two','#three'])
+
+    def test_get_topics_start_with_num(self):
+        tweet = Tweet('#2016trending')
+        self.assertEqual(tweet.get_topics(),[])
+
+    def test_get_topics_contain_non_leading_hash(self):
+        tweet = Tweet('#this#doesnothing')
+        self.assertEqual(tweet.get_topics(),[])
+
+    def test_get_topics_non_leading_hash(self):
+        tweet = Tweet('thisdoesnot#workeither')
+        self.assertEqual(tweet.get_topics(),[])
 
     def test_get_topics_underscore(self):
         tweet = Tweet('#thiscuts_off')
         self.assertEqual(tweet.get_topics(),['#thiscuts'])
 
+    def test_get_links(self):
+        tweet = Tweet('dont click random link http://t.co/f5E8eGREwq')
+        self.assertEqual(tweet.get_topics(),['http://t.co/f5E8eGREwq'])
 
 
 
 def main():
-    tweet = Tweet('hi@replystopshere+right @r$$ @@')
-    #unittest.main()
+    tweet = Tweet('Hello #comp330 @student')
     print(tweet.__doc__)
-    print(tweet.text)
-    print(tweet.get_mentions())
-    print(tweet.get_topics())
+    unittest.main()
+
 
 if __name__ == '__main__':
     main()
