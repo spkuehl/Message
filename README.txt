@@ -10,6 +10,7 @@ Topics:
     Any character that is not a letter or integer will signal the end of the topic and not be included
         ex #hello_2016 the topic is only #hello
 
+
 @reply:
     An @reply is the '@' symbol followed by up to 20 or more letters, integers or underscores any following characters
     are ignored
