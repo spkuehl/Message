@@ -71,11 +71,14 @@ class TestTweetMethods(unittest.TestCase):
         tweet = Tweet('dont click random link http://t.co/f5E8eGREwq')
         self.assertEqual(tweet.get_links(),['http://t.co/f5E8eGREwq'])
 
+    def test_blank_tweet(self):
+        tweet = Tweet('')
+        self.assertEqual(tweet.get_links(),[''])
+        self.assertEqual(tweet.get_mentions(),[''])
+        self.assertEqual(tweet.get_topics(),[''])
 
 
 def main():
-    tweet = Tweet('Hello #comp330 @student')
-    print(tweet.__doc__)
     unittest.main()
 
 
