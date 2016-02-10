@@ -73,9 +73,9 @@ class TestTweetMethods(unittest.TestCase):
 
     def test_blank_tweet(self):
         tweet = Tweet('')
-        self.assertEqual(tweet.get_links(),[''])
-        self.assertEqual(tweet.get_mentions(),[''])
-        self.assertEqual(tweet.get_topics(),[''])
+        self.assertEqual(tweet.get_links(),[])
+        self.assertEqual(tweet.get_mentions(),[])
+        self.assertEqual(tweet.get_topics(),[])
 
 
 def main():
