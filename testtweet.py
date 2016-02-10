@@ -68,8 +68,16 @@ class TestTweetMethods(unittest.TestCase):
         self.assertEqual(tweet.get_topics(),['#thiscuts'])
 
     def test_get_links(self):
-        tweet = Tweet('dont click random link http://t.co/f5E8eGREwq')
-        self.assertEqual(tweet.get_links(),['http://t.co/f5E8eGREwq'])
+        tweet = Tweet('dont click random link http://t.co/thisistest')
+        self.assertEqual(tweet.get_links(),['http://t.co/thisistest'])
+
+    def test_get_multi_links(self):
+        tweet = Tweet('Hey there @charles check these out, http://t.co/thisistest http://t.co/test22test')
+        self.assertEqual(tweet.get_links(),['http://t.co/thisistest', 'http://t.co/test22test'])
+
+    def test_too_long_url(self):
+        tweet = Tweet('http://t.co/testingthisreallylongurl')
+        self.assertEqual(tweet.get_links(),[])
 
     def test_blank_tweet(self):
         tweet = Tweet('')

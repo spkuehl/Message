@@ -16,11 +16,15 @@ class Tweet:
             if len(filtered) == 1:
                 if m == filtered[0]:
                     filtered_mentions.append(m)
-
         return filtered_mentions
 
     def get_topics(self):
         return findall(r"#[a-zA-Z][^\W_]+", self.text)
 
     def get_links(self):
-        return findall(r"(http:\/\/t.co\/)[a-zA-Z|0-9]{10}", self.text)
+        links = findall(r"http:\/\/t.co\/[a-zA-Z|0-9]+", self.text)
+        filtered_links = []
+        for i in links:
+            if len(i) <= 22:
+                filtered_links.append(i)
+        return filtered_links
