@@ -16,6 +16,16 @@ class Tweet:
             if len(filtered) == 1:
                 if m == filtered[0]:
                     filtered_mentions.append(m)
+        mention = filtered_mentions
+        filtered_mentions = []
+
+        for m in mention:
+            if self.text.find(m) == 0:
+                filtered_mentions.append(m)
+            elif self.text[(self.text.find(m) - 1)] == ''\
+            or self.text[(self.text.find(m) - 1)] == ' ':
+                filtered_mentions.append(m)
+
         return filtered_mentions
 
     def get_topics(self):
